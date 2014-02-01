@@ -47,17 +47,16 @@ module Vx
       tags.uniq!
 
       payload = {
-        "@event"      => event,
-        "@process_id" => Process.pid,
-        "@thread_id"  => Thread.current.object_id,
-        "@timestamp"  => Time.now.strftime(DATE_FORMAT),
-        "@tags"       => tags,
-        "@fields"     => env,
-        exception: ex.class.to_s,
-        message:   ex.message.to_s,
-        backtrace: (ex.backtrace || []).map(&:to_s).join("\n"),
+        "@event"     => event,
+        "@timestamp" => Time.now.strftime(DATE_FORMAT),
+        "@tags"      => tags,
+        "@fields"    => env,
+        process_id:  Process.pid,
+        thread_id:   Thread.current.object_id,
+        exception:   ex.class.to_s,
+        message:     ex.message.to_s,
+        backtrace:   (ex.backtrace || []).map(&:to_s).join("\n"),
       }
-      puts payload.inspect
       Vx::Instrumentation::Logger.logger.error(payload)
     end
 
@@ -65,8 +64,8 @@ module Vx
       Vx::Instrumentation::Logger.logger.log(
         ::Logger::INFO,
         "@event"      => name,
-        "@process_id" => Process.pid,
-        "@thread_id"  => Thread.current.object_id,
+        process_id:  Process.pid,
+        thread_id:   Thread.current.object_id,
         "@timestamp"  => started.strftime(DATE_FORMAT),
         "@duration"   => (finished - started).to_f,
         "@fields"     => payload,
