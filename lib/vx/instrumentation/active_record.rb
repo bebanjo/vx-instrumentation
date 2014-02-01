@@ -6,7 +6,7 @@ module Vx
 
       def process
         self.payload = {
-          sql:      payload[:sql].compact,
+          sql:      payload[:sql].gsub("\n", ' ').gsub(/ +/, ' ').strip,
           binds:    render_binds,
           name:     payload[:name],
           duration: payload[:duration]
