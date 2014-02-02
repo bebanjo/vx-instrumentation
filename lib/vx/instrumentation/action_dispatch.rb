@@ -1,3 +1,5 @@
+require 'pp'
+
 module Vx
   module Instrumentation
     class ActionDispatch < Subscriber
@@ -5,7 +7,7 @@ module Vx
       event(/\.action_dispatch$/)
 
       def process
-        req     = payload.delete(:request)
+        req = payload.delete(:request)
         self.payload = {
           path:   req.fullpath,
           ip:     req.ip,

@@ -50,6 +50,8 @@ module Vx
           when "Array"
             value = value.map(&:to_s)
             options[:join_arrays] ? value.join("\n") : value
+          when 'NilClass'
+            nil
           else
             value.inspect
           end
