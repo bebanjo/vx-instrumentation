@@ -70,13 +70,23 @@ describe Vx::Instrumentation::Logger do
     )
   end
 
-  it "should woth with default values" do
+  it "should work with default values" do
     Vx::Instrumentation.with(foo: "bar") do
       logger.info(key: "value")
     end
     expect(result).to eq(
       "foo" => "bar",
       "key" => "value",
+      "severity" => "info"
+    )
+  end
+
+  it "should work with nested default values" do
+    Vx::Instrumentation.with("@fields" => {a: 1}) do
+      logger.info("@fields" => {b: 2})
+    end
+    expect(result).to eq(
+      "@fields" => {"a"=>1, "b"=>2},
       "severity" => "info"
     )
   end

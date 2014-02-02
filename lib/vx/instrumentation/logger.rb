@@ -1,5 +1,6 @@
 require 'json'
 require 'logger'
+require 'active_support/core_ext/hash/deep_merge'
 
 module Vx
 
@@ -75,14 +76,14 @@ module Vx
 
           case
           when msg.is_a?(Hash)
-            values.merge! msg
+            values.deep_merge! msg
           when msg.respond_to?(:to_h)
             values.merge! msg.to_h
           else
-            values.merge!(message: msg)
+            values.deep_merge!(message: msg)
           end
 
-          values.merge!(severity: severity.to_s.downcase)
+          values.deep_merge!(severity: severity.to_s.downcase)
 
           values = make_safe_hash(values)
 
