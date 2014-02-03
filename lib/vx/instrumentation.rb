@@ -9,6 +9,7 @@ require File.expand_path("../instrumentation/active_record",     __FILE__)
 require File.expand_path("../instrumentation/action_dispatch",   __FILE__)
 require File.expand_path("../instrumentation/rails",             __FILE__)
 require File.expand_path("../instrumentation/amqp_consumer",     __FILE__)
+require File.expand_path("../instrumentation/worker",            __FILE__)
 
 module Vx
   module Instrumentation
