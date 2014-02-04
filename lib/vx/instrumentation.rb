@@ -3,11 +3,13 @@ require 'thread'
 require File.expand_path("../instrumentation/version",  __FILE__)
 require File.expand_path("../instrumentation/logger",   __FILE__)
 require File.expand_path("../instrumentation/airbrake", __FILE__)
+require File.expand_path("../instrumentation/stderr",   __FILE__)
 
 module Vx
   module Instrumentation
 
     extend Airbrake
+    extend Stderr
 
     DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%N%z'
     THREAD_KEY  = 'vx_instrumentation_keys'
@@ -50,6 +52,9 @@ module Vx
         message:     ex.message.to_s,
         backtrace:   (ex.backtrace || []).map(&:to_s).join("\n"),
       }
+
+      notify_stderr(ex)
+
       Vx::Instrumentation::Logger.logger.error(payload)
       notify_airbrake(ex, env)
     end
