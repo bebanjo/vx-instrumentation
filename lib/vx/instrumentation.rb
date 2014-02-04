@@ -15,7 +15,7 @@ module Vx
     extend self
 
     def install(target, log_level = 0)
-      $stdout.puts " --> initializing Vx::Instrumentation"
+      $stdout.puts " --> initializing Vx::Instrumentation, log stored in #{target}"
       Instrumentation::Logger.setup target
       Instrumentation::Logger.logger.level = log_level
     end
