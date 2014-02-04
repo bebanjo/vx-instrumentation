@@ -17,8 +17,8 @@ module Vx
           begin
             @device.send(sym, *args, &block)
           rescue Exception => e
-            $stderr.puts "#{e.class.to_s} in #{e.message.inspect} [#{sym.inspect} #{args.inspect}]"
-            $stderr.puts e.backtrace.map{|b| "    #{b}" }.join("\n")
+            $stderr.puts "#{e.class.to_s}, #{e.message.inspect} [#{sym.inspect} #{args.inspect}]"
+            $stderr.puts e.backtrace.map{|b| "\t#{b}" }.join("\n")
           end
         else
           super
@@ -35,7 +35,6 @@ module Vx
         def setup(target)
           log = ::Logger.new(target)
           log.formatter = Formatter
-          $stdout.puts " --> #{self.to_s} to #{target}"
           @logger = new(log)
         end
       end
