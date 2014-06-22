@@ -2,13 +2,12 @@ require 'thread'
 
 require File.expand_path("../instrumentation/version",  __FILE__)
 require File.expand_path("../instrumentation/logger",   __FILE__)
-require File.expand_path("../instrumentation/airbrake", __FILE__)
 require File.expand_path("../instrumentation/stderr",   __FILE__)
+require File.expand_path("../instrumentation/rack/handle_exceptions_middleware", __FILE__)
 
 module Vx
   module Instrumentation
 
-    extend Airbrake
     extend Stderr
 
     DATE_FORMAT = '%Y-%m-%dT%H:%M:%S.%N%z'
@@ -54,9 +53,7 @@ module Vx
       }
 
       notify_stderr(ex)
-
       Vx::Instrumentation::Logger.logger.error(payload)
-      notify_airbrake(ex, env)
     end
 
     def delivery(name, payload, tags, started, finished)
