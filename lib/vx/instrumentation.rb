@@ -21,6 +21,13 @@ module Vx
       Instrumentation::Logger.logger.level = log_level
     end
 
+    def activate(*probes)
+      probes.each do |probe|
+        require File.expand_path("../instrumentation/probe/#{probe}", __FILE__)
+        $stdout.puts " --> activate instrumentations for #{probe}"
+      end
+    end
+
     def with(new_keys)
       old_keys = Thread.current[THREAD_KEY]
       begin
