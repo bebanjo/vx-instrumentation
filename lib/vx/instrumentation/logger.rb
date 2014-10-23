@@ -42,18 +42,23 @@ module Vx
       class Formatter
 
         def self.safe_value(value, options = {})
-          case value.class.to_s
-          when "String", "Fixnum", "Float"
-            value
-          when "Symbol", "BigDecimal"
-            value.to_s
-          when "Array"
-            value = value.map(&:to_s)
-            options[:join_arrays] ? value.join("\n") : value
-          when 'NilClass'
-            nil
+          new_value = case value.class.to_s
+            when "String", "Fixnum", "Float"
+              value
+            when "Symbol", "BigDecimal"
+              value.to_s
+            when "Array"
+              value = value.map(&:to_s)
+              options[:join_arrays] ? value.join("\n") : value
+            when 'NilClass'
+              nil
+            else
+              value.inspect
+            end
+          if new_value.is_a?(String)
+            new_value.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
           else
-            value.inspect
+            new_value
           end
         end
 
