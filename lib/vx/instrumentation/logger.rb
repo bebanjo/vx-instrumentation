@@ -91,7 +91,11 @@ module Vx
 
           values = make_safe_hash(values)
 
-          ::JSON.dump(values) + "\n"
+          if ENV['VX_INSTRUMENTATION_PRETTY']
+            ::JSON.pretty_generate(values) + "\n"
+          else
+            ::JSON.dump(values) + "\n"
+          end
         end
 
       end
