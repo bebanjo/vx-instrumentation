@@ -33,7 +33,7 @@ module Vx
         attr_accessor :logger
 
         def setup(target)
-          log = ::Logger.new(target)
+          log = ::Logger.new(target, shift_age: 7, shift_size: 100_000_000) # 100 mb
           log.formatter = Formatter
           @logger = new(log)
         end
