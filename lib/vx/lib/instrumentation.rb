@@ -14,6 +14,12 @@ module Vx ; module Lib ; module Instrumentation
 
   extend self
 
+  @@app_name = nil
+
+  def app_name
+    @@app_name
+  end
+
   def root
     File.expand_path("../", __FILE__)
   end
@@ -24,8 +30,12 @@ module Vx ; module Lib ; module Instrumentation
     end
   end
 
-  def install(target, log_level = 0)
+  def install(target, options = {})
     $stdout.puts " --> activate Vx::Instrumentation, log stored in #{target}"
+
+    log_level  = options[:log_level] || 0
+    @@app_name = options[:app_name] || 'default'
+
     Lib::Instrumentation::Logger.setup target
     Lib::Instrumentation::Logger.logger.level = log_level
   end
@@ -54,6 +64,7 @@ module Vx ; module Lib ; module Instrumentation
       "@timestamp" => Time.now.strftime(DATE_FORMAT),
       "@tags"      => tags,
       "@fields"    => env,
+      app_name:    app_name,
       process_id:  Process.pid,
       thread_id:   Thread.current.object_id,
       exception:   ex.class.to_s,
@@ -69,12 +80,13 @@ module Vx ; module Lib ; module Instrumentation
     Lib::Instrumentation::Logger.logger.log(
       ::Logger::INFO,
       "@event"      => name,
-      process_id:  Process.pid,
-      thread_id:   Thread.current.object_id,
       "@timestamp"  => started.strftime(DATE_FORMAT),
       "@duration"   => (finished - started).to_f,
       "@fields"     => payload,
-      "@tags"       => tags
+      "@tags"       => tags,
+      process_id:  Process.pid,
+      thread_id:   Thread.current.object_id,
+      app_name:    app_name
     )
   end
 
