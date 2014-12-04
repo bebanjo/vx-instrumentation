@@ -31,7 +31,7 @@ module Vx ; module Lib ; module Instrumentation
   end
 
   def install(target, options = {})
-    $stdout.puts " --> activate Vx::Instrumentation, log stored in #{target}"
+    $stdout.puts " --> activate Vx::Lib::Instrumentation, log stored in #{target}"
 
     log_level  = options[:log_level] || 0
     @@app_name = options[:app_name] || 'default'
