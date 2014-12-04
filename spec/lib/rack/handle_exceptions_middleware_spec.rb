@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Vx::Instrumentation::Rack::HandleExceptionsMiddleware do
+describe Vx::Lib::Instrumentation::Rack::HandleExceptionsMiddleware do
   let(:env)        { {} }
   let(:app)        { ->(e){ e.merge(foo: :bar) } }
   let(:output)     { StringIO.new }
@@ -14,7 +14,7 @@ describe Vx::Instrumentation::Rack::HandleExceptionsMiddleware do
   }
 
   before do
-    Vx::Instrumentation::Logger.setup output
+    Vx::Lib::Instrumentation::Logger.setup output
   end
 
   it "should work when no exceptions raised" do

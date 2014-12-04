@@ -21,6 +21,6 @@ ActiveSupport::Notifications.subscribe(/\.active_record$/) do |event, started, f
     duration: payload[:duration]
   }
 
-  Vx::Instrumentation.delivery event, payload, event.split("."), started, finished
+  Vx::Lib::Instrumentation.delivery event, payload, event.split("."), started, finished
 end
 

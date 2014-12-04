@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Vx::Instrumentation do
+describe Vx::Lib::Instrumentation do
   let(:out)  { StringIO.new }
   let(:inst) { described_class }
   let(:result) {

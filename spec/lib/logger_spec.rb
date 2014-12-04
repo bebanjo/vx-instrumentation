@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Vx::Instrumentation::Logger do
+describe Vx::Lib::Instrumentation::Logger do
   let(:out)    { StringIO.new }
   let(:logger) { described_class.setup out }
   let(:result) {
@@ -71,7 +71,7 @@ describe Vx::Instrumentation::Logger do
   end
 
   it "should work with default values" do
-    Vx::Instrumentation.with(foo: "bar") do
+    Vx::Lib::Instrumentation.with(foo: "bar") do
       logger.info(key: "value")
     end
     expect(result).to eq(
@@ -82,7 +82,7 @@ describe Vx::Instrumentation::Logger do
   end
 
   it "should work with nested default values" do
-    Vx::Instrumentation.with("@fields" => {a: 1}) do
+    Vx::Lib::Instrumentation.with("@fields" => {a: 1}) do
       logger.info("@fields" => {b: 2})
     end
     expect(result).to eq(

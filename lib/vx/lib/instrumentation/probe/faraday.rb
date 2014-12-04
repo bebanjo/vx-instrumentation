@@ -19,6 +19,6 @@ ActiveSupport::Notifications.subscribe(/\.faraday$/) do |event, started, finishe
     request_headers:  render_http_header.call(payload[:request_headers])
   }
 
-  Vx::Instrumentation.delivery event, payload, event.split("."), started, finished
+  Vx::Lib::Instrumentation.delivery event, payload, event.split("."), started, finished
 end
 

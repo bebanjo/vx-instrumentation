@@ -10,6 +10,6 @@ ActiveSupport::Notifications.subscribe(/\.action_dispatch$/) do |event, started,
     content_length: req.content_length,
     user_agent:     req.user_agent
   }
-  Vx::Instrumentation.delivery event, payload, event.split("."), started, finished
+  Vx::Lib::Instrumentation.delivery event, payload, event.split("."), started, finished
 end
 
