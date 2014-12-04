@@ -19,7 +19,7 @@ module Vx ; module Lib ; module Instrumentation
   end
 
   def activate!
-    Dir[root + "/*.rb"].each do |f|
+    Dir[root + "/instrumentation/probe/*.rb"].each do |f|
       require f
     end
   end
@@ -28,8 +28,6 @@ module Vx ; module Lib ; module Instrumentation
     $stdout.puts " --> activate Vx::Instrumentation, log stored in #{target}"
     Lib::Instrumentation::Logger.setup target
     Lib::Instrumentation::Logger.logger.level = log_level
-
-    activate!
   end
 
   def with(new_keys)

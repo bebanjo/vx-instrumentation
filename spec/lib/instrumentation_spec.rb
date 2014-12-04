@@ -10,6 +10,7 @@ describe Vx::Lib::Instrumentation do
 
   it "should successfully install" do
     expect(inst.install out).to be
+    expect(inst.activate!).to be
   end
 
   it "should work with default values" do
